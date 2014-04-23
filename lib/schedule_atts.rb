@@ -35,7 +35,8 @@ module ScheduleAtts
              when 'day'
                IceCube::Rule.daily options[:interval]
              when 'week'
-               if (options.keys & DAY_NAMES).empty?
+               # TODO: should add test for it.
+               if (options.keys.map(&:to_sym) & DAY_NAMES).empty?
                  IceCube::Rule.weekly(options[:interval])
                else
                  IceCube::Rule.weekly(options[:interval]).day( *IceCube::TimeUtil::DAYS.keys.select{|day| options[day].to_i == 1 } )
