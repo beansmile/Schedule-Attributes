@@ -7,7 +7,7 @@ require 'ostruct'
 
 module ScheduleAtts
   DAY_NAMES = Date::DAYNAMES.map(&:downcase).map(&:to_sym)
-  WEEKDAYS = {:monday=>1, :tuesday=>2, :wednesday=>3, :thursday=>4, :friday=>5}
+  WEEKDAYS = { monday:1, tuesday:2, wednesday:3, thursday:4, friday:5 }
 
   def schedule
     @schedule ||= begin
