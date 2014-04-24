@@ -7,6 +7,7 @@ require 'ostruct'
 
 module ScheduleAtts
   DAY_NAMES = Date::DAYNAMES.map(&:downcase).map(&:to_sym)
+  WEEKDAYS = { monday:1, tuesday:2, wednesday:3, thursday:4, friday:5 }
 
   def schedule
     @schedule ||= begin
@@ -41,6 +42,9 @@ module ScheduleAtts
                else
                  IceCube::Rule.weekly(options[:interval]).day( *IceCube::TimeUtil::DAYS.keys.select{|day| options[day].to_i == 1 } )
                end
+             # TODO: should add test for it
+             when 'weekdays'
+               IceCube::Rule.weekly(options[:interval]).day( *WEEKDAYS.keys)
              when 'month'
                if options[:by_day_of].blank?
                  IceCube::Rule.monthly options[:interval]
@@ -81,6 +85,10 @@ module ScheduleAtts
         atts[:interval_unit] = 'week'
 
         if rule_hash[:validations][:day]
+          # TODO: should add test for it.
+          if rule_hash[:validations][:day] == WEEKDAYS.values
+            atts[:interval_unit] = 'weekdays'
+          end
           rule_hash[:validations][:day].each do |day_idx|
             atts[ DAY_NAMES[day_idx] ] = 1
           end
