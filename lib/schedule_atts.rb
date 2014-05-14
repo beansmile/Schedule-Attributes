@@ -43,7 +43,7 @@ module ScheduleAtts
                  IceCube::Rule.weekly(options[:interval]).day( *IceCube::TimeUtil::DAYS.keys.select{|day| options[day].to_i == 1 } )
                end
              # TODO: should add test for it
-             when 'weekdays'
+             when 'weekday'
                IceCube::Rule.weekly(options[:interval]).day( *WEEKDAYS.keys)
              when 'month'
                if options[:by_day_of].blank?
@@ -87,7 +87,7 @@ module ScheduleAtts
         if rule_hash[:validations][:day]
           # TODO: should add test for it.
           if rule_hash[:validations][:day] == WEEKDAYS.values
-            atts[:interval_unit] = 'weekdays'
+            atts[:interval_unit] = 'weekday'
           end
           rule_hash[:validations][:day].each do |day_idx|
             atts[ DAY_NAMES[day_idx] ] = 1
